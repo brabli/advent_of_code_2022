@@ -94,7 +94,6 @@ pub fn solve(path: &str) -> i32 {
                     }
                 }
                 if counter == 3 {
-                    println!("{}", letter);
                     running_total += letter_value(letter);
                     break;
                 }
