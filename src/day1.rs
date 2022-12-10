@@ -1,5 +1,6 @@
 use std::fs;
 
+#[allow(dead_code)]
 pub fn find_most_calories(input_path: &str) -> i32 {
     let raw_input = get_input_as_string(input_path);
     let elf_calorie_strings = get_individual_elf_calorie_strings(&raw_input);

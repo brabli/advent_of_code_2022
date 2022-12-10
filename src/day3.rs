@@ -1,4 +1,4 @@
-use std::{fmt::format, fs};
+use std::fs;
 
 fn get_input_as_string(path: &str) -> String {
     let r = fs::read_to_string(path);
