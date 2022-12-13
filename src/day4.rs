@@ -63,44 +63,45 @@ fn overlaps_at_all(e1: &Elf, e2: &Elf) -> bool {
     false
 }
 
-mod test {
-    use super::*;
+// #[cfg(test)]
+// mod test {
+//     use super::*;
 
-    #[test]
-    fn true_if_all_sections_same() {
-        assert!(fully_contains(&elf(1, 1), &elf(1, 1)));
-    }
+//     #[test]
+//     fn true_if_all_sections_same() {
+//         assert!(fully_contains(&elf(1, 1), &elf(1, 1)));
+//     }
 
-    #[test]
-    fn false_if_range_overlaps() {
-        assert!(!fully_contains(&elf(1, 2), &elf(2, 3)));
-    }
+//     #[test]
+//     fn false_if_range_overlaps() {
+//         assert!(!fully_contains(&elf(1, 2), &elf(2, 3)));
+//     }
 
-    #[test]
-    fn true_if_range_contained() {
-        assert!(fully_contains(&elf(1, 2), &elf(1, 1)));
-        assert!(fully_contains(&elf(1, 2), &elf(1, 2)));
-        assert!(fully_contains(&elf(4, 8), &elf(2, 9)));
-    }
+//     #[test]
+//     fn true_if_range_contained() {
+//         assert!(fully_contains(&elf(1, 2), &elf(1, 1)));
+//         assert!(fully_contains(&elf(1, 2), &elf(1, 2)));
+//         assert!(fully_contains(&elf(4, 8), &elf(2, 9)));
+//     }
 
-    #[test]
-    fn false_if_range_doesnt_overlap() {
-        assert!(!overlaps_at_all(&elf(1, 2), &elf(3, 4)));
-    }
+//     #[test]
+//     fn false_if_range_doesnt_overlap() {
+//         assert!(!overlaps_at_all(&elf(1, 2), &elf(3, 4)));
+//     }
 
-    #[test]
-    fn true_if_fully_contains() {
-        assert!(overlaps_at_all(&elf(1, 4), &elf(2, 3)));
-        assert!(overlaps_at_all(&elf(2, 3), &elf(1, 4)));
-    }
+//     #[test]
+//     fn true_if_fully_contains() {
+//         assert!(overlaps_at_all(&elf(1, 4), &elf(2, 3)));
+//         assert!(overlaps_at_all(&elf(2, 3), &elf(1, 4)));
+//     }
 
-    #[test]
-    fn true_if_overlaps() {
-        assert!(overlaps_at_all(&elf(1, 2), &elf(2, 3)));
-        assert!(overlaps_at_all(&elf(2, 3), &elf(1, 2)));
-    }
+//     #[test]
+//     fn true_if_overlaps() {
+//         assert!(overlaps_at_all(&elf(1, 2), &elf(2, 3)));
+//         assert!(overlaps_at_all(&elf(2, 3), &elf(1, 2)));
+//     }
 
-    fn elf(s: i32, e: i32) -> Elf {
-        Elf { start: s, end: e }
-    }
-}
+//     fn elf(s: i32, e: i32) -> Elf {
+//         Elf { start: s, end: e }
+//     }
+// }

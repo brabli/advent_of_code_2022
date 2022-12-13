@@ -42,39 +42,39 @@ impl Stack {
     }
 }
 
-#[cfg(test)]
-mod stack_test {
-    use super::*;
+// #[cfg(test)]
+// mod stack_test {
+//     use super::*;
 
-    #[test]
-    fn from() {
-        let s = Stack::from("ABC");
-        assert_eq!(s.len(), 3);
+//     #[test]
+//     fn from() {
+//         let s = Stack::from("ABC");
+//         assert_eq!(s.len(), 3);
 
-        let s = Stack::from("");
-        assert_eq!(s.len(), 0);
-    }
+//         let s = Stack::from("");
+//         assert_eq!(s.len(), 0);
+//     }
 
-    #[test]
-    fn pop() {
-        let mut s = Stack::from("ABC");
-        let popped = s.pop();
-        assert_eq!(popped.get_id(), 'C');
+//     #[test]
+//     fn pop() {
+//         let mut s = Stack::from("ABC");
+//         let popped = s.pop();
+//         assert_eq!(popped.get_id(), 'C');
 
-        s.pop();
-        s.pop();
-        assert_eq!(s.len(), 0);
-    }
+//         s.pop();
+//         s.pop();
+//         assert_eq!(s.len(), 0);
+//     }
 
-    #[test]
-    fn push() {
-        let mut s = Stack::from("ABC");
-        s.push(Crate { id: 'D' });
-        assert_eq!(s.len(), 4);
+//     #[test]
+//     fn push() {
+//         let mut s = Stack::from("ABC");
+//         s.push(Crate { id: 'D' });
+//         assert_eq!(s.len(), 4);
 
-        assert_eq!(s.pop().get_id(), 'D');
-    }
-}
+//         assert_eq!(s.pop().get_id(), 'D');
+//     }
+// }
 
 pub struct StackCollection {
     stacks: HashMap<i32, Stack>,
@@ -126,43 +126,43 @@ impl StackCollection {
     }
 }
 
-mod stack_collection_test {
-    use std::collections::HashMap;
+// mod stack_collection_test {
+//     use std::collections::HashMap;
 
-    use super::{Stack, StackCollection};
+//     use super::{Stack, StackCollection};
 
-    #[test]
-    fn move_between_stacks() {
-        let mut sc = get_stack_collection();
-        sc.move_between_stacks(3, 1, 2);
-        assert_eq!(sc.get_stack(1).len(), 0);
-        assert_eq!(sc.get_stack(2).len(), 6);
+//     #[test]
+//     fn move_between_stacks() {
+//         let mut sc = get_stack_collection();
+//         sc.move_between_stacks(3, 1, 2);
+//         assert_eq!(sc.get_stack(1).len(), 0);
+//         assert_eq!(sc.get_stack(2).len(), 6);
 
-        sc.move_between_stacks(5, 2, 1);
-        assert_eq!(sc.get_stack(1).len(), 5);
-        assert_eq!(sc.get_stack(2).len(), 1);
+//         sc.move_between_stacks(5, 2, 1);
+//         assert_eq!(sc.get_stack(1).len(), 5);
+//         assert_eq!(sc.get_stack(2).len(), 1);
 
-        sc.move_between_stacks(5, 1, 3);
-        assert_eq!(sc.get_stack(1).len(), 0);
-        assert_eq!(sc.get_stack(3).len(), 8);
-    }
+//         sc.move_between_stacks(5, 1, 3);
+//         assert_eq!(sc.get_stack(1).len(), 0);
+//         assert_eq!(sc.get_stack(3).len(), 8);
+//     }
 
-    #[test]
-    fn test_order() {
-        let mut sc = get_stack_collection();
-        sc.move_between_stacks(2, 1, 2);
-        assert_eq!(sc.get_stack(1).get_top(), 'A');
-        assert_eq!(sc.get_stack(2).get_top(), 'B');
-    }
+//     #[test]
+//     fn test_order() {
+//         let mut sc = get_stack_collection();
+//         sc.move_between_stacks(2, 1, 2);
+//         assert_eq!(sc.get_stack(1).get_top(), 'A');
+//         assert_eq!(sc.get_stack(2).get_top(), 'B');
+//     }
 
-    fn get_stack_collection() -> StackCollection {
-        let s1 = Stack::from("ABC");
-        let s2 = Stack::from("DEF");
-        let s3 = Stack::from("GHI");
-        let mut stacks = HashMap::new();
-        stacks.insert(1, s1);
-        stacks.insert(2, s2);
-        stacks.insert(3, s3);
-        StackCollection { stacks }
-    }
-}
+//     fn get_stack_collection() -> StackCollection {
+//         let s1 = Stack::from("ABC");
+//         let s2 = Stack::from("DEF");
+//         let s3 = Stack::from("GHI");
+//         let mut stacks = HashMap::new();
+//         stacks.insert(1, s1);
+//         stacks.insert(2, s2);
+//         stacks.insert(3, s3);
+//         StackCollection { stacks }
+//     }
+// }
