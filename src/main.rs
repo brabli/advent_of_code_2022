@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-mod day7;
+mod day8;
 
 fn main() {
     // println!("{}", day1::find_most_calories("input/day1.txt"));
@@ -10,5 +10,7 @@ fn main() {
     // println!("{}", day5::solve("input/day5.txt"));
     // println!("{}", day6::solve("input/day6.txt"));
     // println!("{}", day7::solvePartOne());
-    println!("{}", day7::part2::solve_part_two());
+    // println!("{}", day7::part2::solve_part_two());
+    // println!("{}", day8::part1::solve_part_one());
+    println!("{}", day8::part2::solve_part_two());
 }
