@@ -29,17 +29,11 @@ impl Instruction {
     pub fn execute(&self, x: &mut i32, cycles: &mut i32) {
         match self {
             Self::NOOP => {
-                for _ in 0..self.cycles() {
-                    draw_pixel(*cycles, *x);
-                    *cycles += 1;
-                }
+                run_cycle(self.cycles(), cycles, x);
             }
-            Self::ADD(num) => {
-                for _ in 0..self.cycles() {
-                    draw_pixel(*cycles, *x);
-                    *cycles += 1;
-                }
 
+            Self::ADD(num) => {
+                run_cycle(self.cycles(), cycles, x);
                 *x += num;
             }
         }
@@ -58,6 +52,13 @@ pub fn solve() -> i32 {
     }
 
     0
+}
+
+fn run_cycle(cycles_to_run: u8, cycles: &mut i32, x: &mut i32) {
+    for _ in 0..cycles_to_run {
+        draw_pixel(*cycles, *x);
+        *cycles += 1;
+    }
 }
 
 fn draw_pixel(cycle: i32, x: i32) {
