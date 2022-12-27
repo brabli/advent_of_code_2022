@@ -17,6 +17,6 @@ fn main() {
     // println!("{}", day9::part1::solve());
     // println!("{}", day9::part2::solve());
 
-    println!("{}", day10::part1::solve());
-    // println!("{}", day10::part2::solve());
+    // println!("{}", day10::part1::solve());
+    println!("{}", day10::part2::solve());
 }
