@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 
 mod day10;
+mod day11;
 mod day9;
 
 fn main() {
@@ -16,7 +17,9 @@ fn main() {
     // println!("{}", day8::part2::solve_part_two());
     // println!("{}", day9::part1::solve());
     // println!("{}", day9::part2::solve());
-
     // println!("{}", day10::part1::solve());
-    println!("{}", day10::part2::solve());
+    // println!("{}", day10::part2::solve());
+
+    println!("{}", day11::part1::solve());
+    // println!("{}", day11::part2::solve());
 }
