@@ -1,54 +1,54 @@
 Monkey 0:
-  Starting items: 78, 53, 89, 51, 52, 59, 58, 85
+  vec![78, 53, 89, 51, 52, 59, 58, 85]
   new = old * 3
     worry % 5 == 0
     TRUE monkey 2
     FALSE monkey 7
 
 Monkey 1:
-  Starting items: 64
+  vec![64]
   new = old + 7
     worry % 2 == 0
     TRUE monkey 3
     FALSE monkey 6
 
 Monkey 2:
-  Starting items: 71, 93, 65, 82
+  vec![71, 93, 65, 82]
   new = old + 5
     worry % 13 == 0
     TRUE monkey 5
     FALSE monkey 4
 
 Monkey 3:
-  Starting items: 67, 73, 95, 75, 56, 74
+  vec![67, 73, 95, 75, 56, 74]
   new = old + 8
     worry % 19 == 0
     TRUE monkey 6
     FALSE monkey 0
 
 Monkey 4:
-  Starting items: 85, 91, 90
+  vec![85, 91, 90]
   new = old + 4
     worry % 11 == 0
     TRUE monkey 3
     FALSE monkey 1
 
 Monkey 5:
-  Starting items: 67, 96, 69, 55, 70, 83, 62
+  vec![67, 96, 69, 55, 70, 83, 62]
   new = old * 2
     worry % 3 == 0
     TRUE monkey 4
     FALSE monkey 1
 
 Monkey 6:
-  Starting items: 53, 86, 98, 70, 64
+  vec![53, 86, 98, 70, 64]
   new = old + 6
     worry % 7 == 0
     TRUE monkey 7
     FALSE monkey 0
 
 Monkey 7:
-  Starting items: 88, 64
+  vec![88, 64]
   new = old * old
     worry % 17 == 0
     TRUE monkey 2
