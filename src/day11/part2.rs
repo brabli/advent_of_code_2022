@@ -2,12 +2,11 @@ use monkey::*;
 
 mod monkey;
 
-// #[allow(unused)]
 pub fn solve() -> i32 {
     let mut monkies = init_monkeys();
     let mut mods: Vec<MonkeyMod> = vec![];
 
-    for _i in 0..20 {
+    for _i in 0..10000 {
         for monkey in &mut monkies {
             if monkey.name == Name::Zero {
                 println!("{}", monkey.inspections);
@@ -25,13 +24,12 @@ pub fn solve() -> i32 {
             for item in &monkey.held_items {
                 let increased_worry = monkey.increase_worry_level_closure.as_ref()(*item);
                 monkey.inspections += 1;
-                let reduced_worry = reduce_worry_level(increased_worry);
-                let worry_check = check_worry_is_divisible(monkey.worry_divisor, reduced_worry);
+                let worry_check = check_worry_is_divisible(monkey.worry_divisor, increased_worry);
                 let throwing_to_monkey_name = monkey.throwing_to_monkey(worry_check);
 
                 mods.push(MonkeyMod {
                     name: throwing_to_monkey_name.clone(),
-                    item: reduced_worry,
+                    item: increased_worry,
                 });
             }
 
