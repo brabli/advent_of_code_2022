@@ -52,6 +52,10 @@ impl Monkey {
     }
 }
 
+pub fn get_divisors() -> [usize; 8] {
+    init_monkeys().map(|m| m.worry_divisor)
+}
+
 pub fn init_monkeys() -> [Monkey; 8] {
     let monkey_0 = Monkey {
         name: Name::Zero,
