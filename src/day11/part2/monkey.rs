@@ -24,10 +24,6 @@ impl std::fmt::Debug for Monkey {
     }
 }
 
-pub fn reduce_worry_level(worry_level: usize) -> usize {
-    worry_level / 3
-}
-
 pub fn check_worry_is_divisible(divisor: usize, worry: usize) -> bool {
     worry % divisor == 0
 }

@@ -2,16 +2,16 @@ use monkey::*;
 
 mod monkey;
 
-pub fn solve() -> i32 {
+pub fn solve() {
     let mut monkies = init_monkeys();
     let mut mods: Vec<MonkeyMod> = vec![];
+    let product = get_divisors().into_iter().product::<usize>();
 
-    for _i in 0..10000 {
+    for i in 0..10000 {
+        if i % 100 == 0 {
+            println!("{}", i);
+        }
         for monkey in &mut monkies {
-            if monkey.name == Name::Zero {
-                println!("{}", monkey.inspections);
-            }
-
             for m in &mut mods {
                 if m.name == monkey.name {
                     monkey.held_items.push(m.item);
@@ -20,9 +20,13 @@ pub fn solve() -> i32 {
 
             mods.retain(|m| m.name != monkey.name);
 
-            println!("Number of items held: {}", monkey.held_items.len());
+            // dbg!(mods.len());
             for item in &monkey.held_items {
-                let increased_worry = monkey.increase_worry_level_closure.as_ref()(*item);
+                // println!("{}", item);
+                let mut increased_worry = monkey.increase_worry_level_closure.as_ref()(*item);
+
+                increased_worry %= product;
+
                 monkey.inspections += 1;
                 let worry_check = check_worry_is_divisible(monkey.worry_divisor, increased_worry);
                 let throwing_to_monkey_name = monkey.throwing_to_monkey(worry_check);
@@ -47,12 +51,23 @@ pub fn solve() -> i32 {
     let first_largest = nums.first().unwrap();
     let second_largest = nums.get(1).unwrap();
 
-    println!(
-        "First largest: {}\nSecond largest: {}",
-        first_largest, second_largest
-    );
+    let a = first_largest * second_largest;
+    println!("The answer is {}", a);
+}
 
-    (first_largest * second_largest).try_into().unwrap()
+fn find_largest(nums: &mut [usize]) -> Option<usize> {
+    if nums.is_empty() {
+        return None;
+    }
+
+    if nums.len() == 1 {
+        return Some(nums[0]);
+    }
+
+    nums.sort_by(|a, b| b.cmp(a));
+
+    let largest = nums[0];
+    Some(largest)
 }
 
 #[derive(Debug)]
