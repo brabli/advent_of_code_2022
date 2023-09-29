@@ -15,15 +15,17 @@ pub fn solve() -> i32 {
         .chars()
         .collect();
 
-    // let num_items = char_slice_to_int_slice(&char_items);
-
-    let _grid = Grid {
+    let grid = Grid {
         items: &char_items,
         rows,
         cols,
     };
 
-    // dbg!(grid);
+    let start = find_special(Special::Start)(&grid);
+    let end = find_special(Special::End)(&grid);
+
+    let grid_without_specials = replace_with('e')('z')(&char_items);
+    // let num_items = char_slice_to_int_slice(&char_items);
 
     0
 }
@@ -40,51 +42,35 @@ fn char_to_int(c: char) -> u8 {
     c as u8 - 96
 }
 
-fn replace_s_with_a(chars: &[char]) -> Vec<char> {
-    chars
-        .iter()
-        .map(|c| {
-            if *c == 'S' {
-                return 'a';
-            }
-
-            *c
+type ReplaceFunction = Box<dyn Fn(char) -> Box<dyn Fn(&[char]) -> Vec<char>>>;
+fn replace_with(target: char) -> ReplaceFunction {
+    Box::new(move |replacement: char| {
+        Box::new(move |chars: &[char]| {
+            chars
+                .iter()
+                .map(|c| if *c == target { replacement } else { *c })
+                .collect()
         })
-        .collect()
-}
-
-fn replace_e_with_z(chars: &[char]) -> Vec<char> {
-    chars
-        .iter()
-        .map(|c| {
-            if *c == 'E' {
-                return 'z';
-            }
-
-            *c
-        })
-        .collect()
+    })
 }
 
 #[derive(Debug)]
-enum SpecialChar {
+enum Special {
     Start,
     End,
 }
 
-impl PartialEq<char> for SpecialChar {
+impl PartialEq<char> for Special {
     fn eq(&self, other: &char) -> bool {
         match self {
-            SpecialChar::Start => 'S' == *other,
-            SpecialChar::End => 'E' == *other,
+            Special::Start => 'S' == *other,
+            Special::End => 'E' == *other,
         }
     }
 }
 
-type Function = Box<dyn Fn(&Grid<char>) -> (usize, usize)>;
-
-fn find_special_char(special: SpecialChar) -> Function {
-    Box::new(move |grid| {
+fn find_special(special: Special) -> impl Fn(&Grid<char>) -> (usize, usize) {
+    move |grid| {
         let index = grid
             .items
             .iter()
@@ -93,7 +79,7 @@ fn find_special_char(special: SpecialChar) -> Function {
 
         grid.find_index_coords(index)
             .expect("Found starting value but failed to fins it's coords.")
-    })
+    }
 }
 
 #[cfg(test)]
@@ -127,21 +113,22 @@ mod tests {
 
     #[test]
     fn letter_s_is_replaced_with_a() {
-        let result = replace_s_with_a(&['a', 'b', 'S']);
-        assert_eq!(vec!['a', 'b', 'a'], result);
+        let chars = ['a', 'b', 'S'];
+        let res = replace_with('S')('a')(&chars);
+        assert_eq!(vec!['a', 'b', 'a'], res);
     }
 
     #[test]
     fn letter_e_is_replaced_with_z() {
-        let result = replace_e_with_z(&['S', 'b', 'E']);
-        assert_eq!(vec!['S', 'b', 'z'], result);
+        let chars = ['S', 'b', 'E'];
+        let res = replace_with('E')('z')(&chars);
+        assert_eq!(vec!['S', 'b', 'z'], res);
     }
 
     #[test]
     fn returns_starting_coords() {
         let grid = create_grid();
-        let find_starting_coords = find_special_char(SpecialChar::Start);
-        let find_starting_coords = find_starting_coords.as_ref();
+        let find_starting_coords = find_special(Special::Start);
 
         assert_eq!(find_starting_coords(&grid), (0, 3));
     }
@@ -149,8 +136,7 @@ mod tests {
     #[test]
     fn returns_ending_coords() {
         let grid = create_grid();
-        let find_end_coords = find_special_char(SpecialChar::End);
-        let find_end_coords = find_end_coords.as_ref();
+        let find_end_coords = find_special(Special::End);
 
         assert_eq!(find_end_coords(&grid), (1, 0));
     }
