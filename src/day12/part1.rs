@@ -66,6 +66,36 @@ fn replace_e_with_z(chars: &[char]) -> Vec<char> {
         .collect()
 }
 
+#[derive(Debug)]
+enum SpecialChar {
+    Start,
+    End,
+}
+
+impl PartialEq<char> for SpecialChar {
+    fn eq(&self, other: &char) -> bool {
+        match self {
+            SpecialChar::Start => 'S' == *other,
+            SpecialChar::End => 'E' == *other,
+        }
+    }
+}
+
+type Function = Box<dyn Fn(&Grid<char>) -> (usize, usize)>;
+
+fn find_special_char(special: SpecialChar) -> Function {
+    Box::new(move |grid| {
+        let index = grid
+            .items
+            .iter()
+            .position(|i| special == *i)
+            .unwrap_or_else(|| panic!("No special char {:?} found.", grid));
+
+        grid.find_index_coords(index)
+            .expect("Found starting value but failed to fins it's coords.")
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -105,5 +135,31 @@ mod tests {
     fn letter_e_is_replaced_with_z() {
         let result = replace_e_with_z(&['S', 'b', 'E']);
         assert_eq!(vec!['S', 'b', 'z'], result);
+    }
+
+    #[test]
+    fn returns_starting_coords() {
+        let grid = create_grid();
+        let find_starting_coords = find_special_char(SpecialChar::Start);
+        let find_starting_coords = find_starting_coords.as_ref();
+
+        assert_eq!(find_starting_coords(&grid), (0, 3));
+    }
+
+    #[test]
+    fn returns_ending_coords() {
+        let grid = create_grid();
+        let find_end_coords = find_special_char(SpecialChar::End);
+        let find_end_coords = find_end_coords.as_ref();
+
+        assert_eq!(find_end_coords(&grid), (1, 0));
+    }
+
+    fn create_grid() -> Grid<'static, char> {
+        Grid {
+            items: &['S', 'b', 'c', 'd', 'e', 'f', 'g', 'E'],
+            rows: 4,
+            cols: 2,
+        }
     }
 }
